@@ -1,15 +1,23 @@
+#![allow(dead_code)]
 use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::io;
-mod day1;
+mod day2;
 
+/// Read file into string vector.
 fn read_lines(filename: &str) -> Result<Vec<String>, io::Error> {
-    // Open the file in read-only mode (ignoring errors).
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
 
     reader.lines().collect::<Result<_, _>>()
+}
+
+/// String vector to int vector.
+fn to_ints(input: Vec<String>) -> Vec<u32> {
+    input.into_iter()
+          .map(|s| s.parse::<u32>().unwrap())
+          .collect()
 }
 
 fn main() {
@@ -18,13 +26,6 @@ fn main() {
     let path = format!("../inputs/{}", filename);
     let inputs = read_lines(&path).unwrap();
 
-    let ints = inputs.into_iter()
-                     .map(|s| s.parse::<u32>().unwrap())
-                     .collect();
-    let result = day1::part2(&ints);
-    // let result = day1::run(&ints);
-    match result {
-        Ok(v) => println!("{}", v),
-        Err(e) => println!("{}", e),
-    }
+    let result = day2::part2(&inputs);
+    println!("{}", result);
 }
