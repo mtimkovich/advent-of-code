@@ -1,5 +1,3 @@
-use std::cmp;
-
 fn lower(range: &mut (u32, u32)) {
     range.1 = range.1 - (range.1 - range.0 + 1) / 2;
 }
@@ -25,14 +23,27 @@ fn seat_id(seat: &String) -> u32 {
     row.0 * 8 + column.0
 }
 
-pub fn part1(passes: Vec<String>) -> u32 {
-    let mut max = 0;
-    for pass in passes {
-        let id = seat_id(&pass);
-        max = cmp::max(id, max);
+fn all_ids<'a>(passes: &'a Vec<String>) -> impl Iterator<Item=u32> + 'a {
+    passes.into_iter().map(|p| seat_id(p))
+}
+
+pub fn part1(passes: &Vec<String>) -> u32 {
+    all_ids(passes).max().unwrap()
+}
+
+pub fn part2(passes: &Vec<String>) -> Option<u32> {
+    let mut ids = all_ids(passes).collect::<Vec<u32>>();
+    ids.sort();
+    let mut iter = ids.into_iter();
+    let mut last = iter.next().unwrap();
+    for id in iter {
+        if id - last != 1 {
+            return Some(id - 1);
+        }
+        last = id;
     }
 
-    max
+    None
 }
 
 #[cfg(test)]

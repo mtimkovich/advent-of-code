@@ -26,6 +26,6 @@ fn main() {
         .expect("filename is required");
     let path = format!("../inputs/{}", filename);
     let inputs = read_lines(&path).unwrap();
-    let result = day5::part1(inputs);
-    // println!("{}", result);
+    let result = day5::part2(&inputs);
+    println!("{}", result.unwrap());
 }
