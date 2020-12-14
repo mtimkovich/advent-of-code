@@ -34,13 +34,14 @@ pub fn part1(passes: &Vec<String>) -> u32 {
 pub fn part2(passes: &Vec<String>) -> Option<u32> {
     let mut ids = all_ids(passes).collect::<Vec<u32>>();
     ids.sort();
-    let mut iter = ids.into_iter();
-    let mut last = iter.next().unwrap();
-    for id in iter {
-        if id - last != 1 {
-            return Some(id - 1);
+    for (i, id) in ids.iter().enumerate() {
+        if i == ids.len() - 1 {
+            break;
         }
-        last = id;
+
+        if ids[i+1] - id != 1 {
+            return Some(id + 1);
+        }
     }
 
     None
