@@ -39,8 +39,7 @@ pub fn part1(lines: &Vec<String>) -> u32 {
 }
 
 pub fn part2(lines: &Vec<String>) -> u32 {
-    let mut product = 1;
-    let locs = vec![
+    let mut locs = vec![
         Loc::new(1, 1),
         Loc::new(3, 1),
         Loc::new(5, 1),
@@ -48,10 +47,7 @@ pub fn part2(lines: &Vec<String>) -> u32 {
         Loc::new(1, 2),
     ];
 
-    for mut loc in locs {
-        let trees = count_trees(&lines, &mut loc);
-        product *= trees;
-    }
-
-    product
+    locs.iter_mut()
+        .map(|mut x| count_trees(&lines, &mut x))
+        .fold(1, |p, x| p * x)
 }
