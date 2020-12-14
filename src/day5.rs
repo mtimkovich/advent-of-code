@@ -1,9 +1,13 @@
+fn halve(range: &(u32, u32)) -> u32 {
+    (range.1 - range.0 + 1) / 2
+}
+
 fn lower(range: &mut (u32, u32)) {
-    range.1 = range.1 - (range.1 - range.0 + 1) / 2;
+    range.1 -= halve(range);
 }
 
 fn upper(range: &mut (u32, u32)) {
-    range.0 = range.0 + (range.1 - range.0 + 1) / 2;
+    range.0 += halve(range);
 }
 
 fn seat_id(seat: &String) -> u32 {
