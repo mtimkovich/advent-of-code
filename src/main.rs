@@ -3,7 +3,8 @@ use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::io;
-mod day2;
+
+mod day3;
 
 /// Read file into string vector.
 fn read_lines(filename: &str) -> Result<Vec<String>, io::Error> {
@@ -25,7 +26,6 @@ fn main() {
         .expect("filename is required");
     let path = format!("../inputs/{}", filename);
     let inputs = read_lines(&path).unwrap();
-
-    let result = day2::part2(&inputs);
+    let result = day3::2art2(&inputs);
     println!("{}", result);
 }
