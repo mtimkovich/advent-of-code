@@ -50,8 +50,7 @@ impl Grid {
         let mut new_grid = self.grid.clone();
 
         for (x, row) in self.grid.iter().enumerate() {
-            for (y, _) in row.iter().enumerate() {
-                let val = self.grid[x][y];
+            for (y, &val) in row.iter().enumerate() {
                 if val == '.' {
                     continue;
                 }
