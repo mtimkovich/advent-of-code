@@ -2,7 +2,7 @@ fn setup(inputs: &Vec<u32>) -> Vec<u32> {
     let mut joltages = inputs.clone();
     joltages.push(0);
     joltages.sort();
-    joltages.push(joltages[joltages.len()-1] + 3);
+    joltages.push(joltages.last().unwrap() + 3);
     joltages
 }
 
