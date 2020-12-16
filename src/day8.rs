@@ -24,7 +24,7 @@ impl Proc {
             },
             "jmp" => self.line += value,
             "nop" => self.line += 1,
-            _ => panic!("invalid cmd"),
+            _ => panic!("invalid cmd on line {}", self.line),
         };
     }
 

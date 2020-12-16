@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::io;
 
-mod day8;
+mod day9;
 
 /// Read file into string vector.
 fn read_lines(filename: &str) -> Result<Vec<String>, io::Error> {
@@ -15,9 +15,9 @@ fn read_lines(filename: &str) -> Result<Vec<String>, io::Error> {
 }
 
 /// String vector to int vector.
-fn to_ints(input: Vec<String>) -> Vec<u32> {
+fn to_ints(input: &Vec<String>) -> Vec<u64> {
     input.into_iter()
-          .map(|s| s.parse::<u32>().unwrap())
+          .map(|s| s.parse::<u64>().unwrap())
           .collect()
 }
 
@@ -26,7 +26,8 @@ fn main() {
         .expect("filename is required");
     let path = format!("../inputs/{}", filename);
     let inputs = read_lines(&path).unwrap();
-    day8::part1(&inputs);
+
+    day9::part1(&to_ints(&inputs));
     // let result = day7::part1(&inputs);
     // println!("{}", result);
 }
