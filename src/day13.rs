@@ -1,20 +1,20 @@
 use regex::Regex;
 
-fn parse_busses(line: &String) -> Vec<u32> {
+fn parse_buses(line: &String) -> Vec<u32> {
     let re = Regex::new(r"(\d+)").unwrap();
-    let mut busses = Vec::new();
+    let mut buses = Vec::new();
     for caps in re.captures_iter(line) {
-        busses.push(caps.get(1).and_then(|s| s.as_str().parse::<u32>().ok()).unwrap());
+        buses.push(caps.get(1).and_then(|s| s.as_str().parse::<u32>().ok()).unwrap());
     }
 
-    busses
+    buses
 }
 
 pub fn part1(lines: &Vec<String>) {
     let timestamp = lines[0].parse::<u32>().unwrap();
-    let busses = parse_busses(&lines[1]);
+    let buses = parse_buses(&lines[1]);
 
-    let res = busses.iter().map(|b| {
+    let res = buses.iter().map(|b| {
         let quotient = timestamp / b;
         let mut next_bus = b * quotient;
         if next_bus < timestamp {
