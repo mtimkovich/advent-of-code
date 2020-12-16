@@ -1,14 +1,6 @@
 use std::cmp::PartialEq;
 use std::fmt;
 
-fn usize_add(x: usize, a: i32) -> usize {
-    if a >= 0 {
-        return x + a as usize;
-    }
-
-    x - (-a) as usize
-}
-
 #[derive(Clone)]
 struct Grid {
     grid: Vec<Vec<char>>,
@@ -24,6 +16,19 @@ impl Grid {
         Grid{grid}
     }
 
+    fn adjacent(&self, x: usize, y: usize, i: i32, j: i32) -> Option<&char> {
+        let mut x: i32 = x as i32;
+        let mut y: i32 = y as i32;
+        x += i;
+        y += j;
+
+        if (i == 0 && j == 0) || (x < 0 || y < 0) {
+            return None;
+        }
+
+        self.grid.get(x as usize).and_then(|g| g.get(y as usize))
+    }
+
     fn get_neighbors(&self, x: usize, y: usize) -> Neighbors {
         let mut neighbors = Neighbors{empty: 0, occupied: 0};
 
@@ -33,9 +38,7 @@ impl Grid {
                     continue;
                 }
 
-                let val = self.grid.get(usize_add(x, i))
-                    .and_then(|g| g.get(usize_add(y, j)));
-                match val {
+                match self.adjacent(x, y, i, j) {
                     Some('L') => neighbors.empty += 1,
                     Some('#') => neighbors.occupied += 1,
                     _ => (),
@@ -77,7 +80,7 @@ impl Grid {
         let mut cur_grid = self.clone();
         let mut prev_grid = self.clone();
         for i in 0.. {
-           cur_grid = prev_grid.predict();
+            cur_grid = prev_grid.predict();
             if cur_grid == prev_grid {
                 println!("{} iterations", i);
                 return cur_grid;
