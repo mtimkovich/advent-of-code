@@ -20,7 +20,7 @@ pub fn part1(lines: &Vec<String>) {
         if next_bus < timestamp {
             next_bus += b;
         }
-        (next_bus - timestamp, b.clone())
+        (next_bus - timestamp, *b)
     }).min().unwrap();
 
     println!("{:?}", res.0 * res.1);
