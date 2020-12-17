@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::io;
 
-mod day13;
+mod day14;
 
 /// Read file into string vector.
 fn read_lines(filename: &str) -> Result<Vec<String>, io::Error> {
@@ -27,5 +27,5 @@ fn main() {
     let path = format!("../inputs/{}", filename);
     let inputs = read_lines(&path).unwrap();
 
-    day13::part1(&inputs);
+    day14::part1(&inputs);
 }
