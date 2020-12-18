@@ -23,11 +23,28 @@ fn get_rules(lines: &Vec<String>) -> Vec<(u32, u32)> {
     rules
 }
 
-pub fn part1(lines: &Vec<String>) {
+fn invalid(rules: &Vec<(u32, u32)>, n: u32) -> Option<u32> {
+    for &(low, high) in rules {
+        if n >= low && n <= high {
+            return None;
+        }
+    }
+
+    Some(n)
+}
+
+pub fn part1(lines: &Vec<String>) -> u32 {
     let rules = get_rules(lines);
+    let tickets = lines.iter()
+                       .skip_while(|&line| !line.starts_with("nearby"))
+                       .skip(1);
 
-    let mut tickets = lines.iter().skip_while(|&line| !line.starts_with("nearby")).skip(1);
-    println!("{}", tickets.next().unwrap());
+    let res: u32 = tickets.flat_map(|t| t.split(',')
+        .filter_map(|s| {
+            s.parse::<u32>().ok()
+             .and_then(|n| invalid(&rules, n))
+        })).sum();
 
-    println!("{:?}", rules);
+    println!("{}", res);
+    res
 }
