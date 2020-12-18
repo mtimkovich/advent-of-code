@@ -27,7 +27,7 @@ fn seat_id(seat: &String) -> u32 {
     row.0 * 8 + column.0
 }
 
-fn all_ids<'a>(passes: &'a Vec<String>) -> impl Iterator<Item=u32> + 'a {
+fn all_ids<'a>(passes: &'a Vec<String>) -> impl Iterator<Item = u32> + 'a {
     passes.into_iter().map(|p| seat_id(p))
 }
 
@@ -43,7 +43,7 @@ pub fn part2(passes: &Vec<String>) -> Option<u32> {
             break;
         }
 
-        if ids[i+1] - id != 1 {
+        if ids[i + 1] - id != 1 {
             return Some(id + 1);
         }
     }
@@ -57,8 +57,13 @@ mod tests {
 
     #[test]
     fn lower_test() {
-        let cases = [((0, 127), 63), ((32, 63), 47), ((44, 47), 45),
-                     ((44, 45), 44), ((4, 7), 5)];
+        let cases = [
+            ((0, 127), 63),
+            ((32, 63), 47),
+            ((44, 47), 45),
+            ((44, 45), 44),
+            ((4, 7), 5),
+        ];
         for (mut range, res) in &cases {
             lower(&mut range);
             assert_eq!(range.1, *res);
@@ -67,8 +72,13 @@ mod tests {
 
     #[test]
     fn upper_test() {
-        let cases = [((0, 63), 32), ((32, 47), 40), ((40, 47), 44),
-                     ((0, 7), 4), ((4, 5), 5)];
+        let cases = [
+            ((0, 63), 32),
+            ((32, 47), 40),
+            ((40, 47), 44),
+            ((0, 7), 4),
+            ((4, 5), 5),
+        ];
         for (mut range, res) in &cases {
             upper(&mut range);
             assert_eq!(range.0, *res);

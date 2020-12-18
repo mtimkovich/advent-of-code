@@ -13,7 +13,7 @@ impl Grid {
             grid.push(line.chars().collect());
         }
 
-        Grid{grid}
+        Grid { grid }
     }
 
     fn adjacent(&self, x: usize, y: usize, i: i32, j: i32) -> Option<&char> {
@@ -30,7 +30,10 @@ impl Grid {
     }
 
     fn get_neighbors(&self, x: usize, y: usize) -> Neighbors {
-        let mut neighbors = Neighbors{empty: 0, occupied: 0};
+        let mut neighbors = Neighbors {
+            empty: 0,
+            occupied: 0,
+        };
 
         for i in -1..2i32 {
             for j in -1..2i32 {
@@ -67,13 +70,14 @@ impl Grid {
             }
         }
 
-        Grid{grid: new_grid}
+        Grid { grid: new_grid }
     }
 
     fn occupied(&self) -> usize {
-        self.grid.iter().flat_map(|row| {
-            row.iter().filter(|&&i| i == '#')
-        }).count()
+        self.grid
+            .iter()
+            .flat_map(|row| row.iter().filter(|&&i| i == '#'))
+            .count()
     }
 
     fn simulation(&self) -> Grid {
@@ -95,7 +99,6 @@ impl Grid {
 
 impl fmt::Display for Grid {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Use `self.number` to refer to each positional data point.
         for row in self.grid.iter() {
             for x in row {
                 write!(f, "{}", x).ok();

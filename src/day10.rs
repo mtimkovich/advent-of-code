@@ -15,7 +15,7 @@ pub fn part1(inputs: &Vec<u32>) {
             break;
         }
 
-        match joltages[i+1] - jolt {
+        match joltages[i + 1] - jolt {
             1 => ones += 1,
             3 => threes += 1,
             _ => println!("something else"),

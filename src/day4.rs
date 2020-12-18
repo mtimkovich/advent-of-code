@@ -41,7 +41,10 @@ fn validate_year(name: &str, value: &str) -> bool {
         ("byr", (1920, 2002)),
         ("iyr", (2010, 2020)),
         ("eyr", (2020, 2030)),
-    ].iter().cloned().collect();
+    ]
+    .iter()
+    .cloned()
+    .collect();
     let year = match value.parse::<u32>() {
         Ok(y) => y,
         Err(_) => return false,
@@ -80,7 +83,9 @@ fn validate_field(name: &str, value: &str) -> bool {
         return value.parse::<u32>().is_ok();
     } else if name == "ecl" {
         let ecls: HashSet<&str> = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
-            .iter().cloned().collect();
+            .iter()
+            .cloned()
+            .collect();
         return ecls.contains(value);
     } else if name == "hcl" {
         let re = Regex::new(r"#[a-z0-9]{6}").unwrap();

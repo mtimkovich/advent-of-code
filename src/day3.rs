@@ -7,7 +7,7 @@ struct Loc {
 
 impl Loc {
     fn new(dx: usize, dy: usize) -> Self {
-        Loc {x: 0, y: 0, dx, dy}
+        Loc { x: 0, y: 0, dx, dy }
     }
 
     fn update(&mut self) {
@@ -49,5 +49,5 @@ pub fn part2(lines: &Vec<String>) -> u32 {
 
     locs.iter_mut()
         .map(|mut x| count_trees(&lines, &mut x))
-        .fold(1, |p, x| p * x)
+        .product()
 }

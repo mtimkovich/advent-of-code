@@ -27,9 +27,7 @@ pub fn part2(lines: &Vec<String>) -> usize {
 
     for line in lines {
         if line == "" {
-            let everyone = answers.iter()
-                                  .filter(|(_, &v)| v == members)
-                                  .count();
+            let everyone = answers.iter().filter(|(_, &v)| v == members).count();
             sum += everyone;
             answers.clear();
             members = 0;

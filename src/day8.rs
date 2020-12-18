@@ -9,7 +9,7 @@ struct Proc {
 
 impl Proc {
     fn new() -> Self {
-        Proc{
+        Proc {
             line: 0,
             acc: 0,
             visited: HashSet::new(),
@@ -21,14 +21,14 @@ impl Proc {
             "acc" => {
                 self.acc += value;
                 self.line += 1;
-            },
+            }
             "jmp" => self.line += value,
             "nop" => self.line += 1,
             _ => panic!("invalid cmd on line {}", self.line),
         };
     }
 
-    fn run(&mut self, program: &Vec<String>) -> i32{
+    fn run(&mut self, program: &Vec<String>) -> i32 {
         let re = Regex::new(r"([a-z]+) (.*)").unwrap();
 
         while self.line < program.len() as i32 {

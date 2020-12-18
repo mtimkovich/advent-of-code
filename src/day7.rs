@@ -50,7 +50,7 @@ fn search(start: &String, rules: &HashMap<String, Vec<String>>) -> Option<usize>
     None
 }
 
-pub fn part1(lines: &Vec<String>) -> usize{
+pub fn part1(lines: &Vec<String>) -> usize {
     let rules = create_rules(lines);
     let res = rules.keys().filter_map(|k| search(&k, &rules)).count();
 

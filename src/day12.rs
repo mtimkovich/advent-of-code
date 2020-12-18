@@ -13,7 +13,7 @@ fn parse(lines: &Vec<String>) -> Vec<Action> {
         let cap = re.captures(line).unwrap();
         let action = cap.get(1).unwrap().as_str().chars().next().unwrap();
         let value = cap.get(2).unwrap().as_str().parse::<i32>().unwrap();
-        actions.push(Action{action, value});
+        actions.push(Action { action, value });
     }
 
     actions
@@ -40,12 +40,7 @@ pub fn part1(lines: &Vec<String>) {
     let mut face = 0;
 
     // This could probably be done better with math lmao
-    let card = vec![
-        vec![0, 1],
-        vec![-1, 0],
-        vec![0, -1],
-        vec![1, 0],
-    ];
+    let card = vec![vec![0, 1], vec![-1, 0], vec![0, -1], vec![1, 0]];
 
     for a in &actions {
         match a.action {

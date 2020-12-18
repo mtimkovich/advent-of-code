@@ -1,4 +1,4 @@
-use regex::{Regex, Captures};
+use regex::{Captures, Regex};
 
 struct Policy<'a> {
     low: usize,
@@ -9,7 +9,7 @@ struct Policy<'a> {
 
 impl<'a> Policy<'a> {
     fn new(caps: &'a Captures) -> Self {
-        Policy{
+        Policy {
             low: Policy::get_match(&caps, 1).parse::<usize>().unwrap(),
             high: Policy::get_match(&caps, 2).parse::<usize>().unwrap(),
             letter: Policy::get_match(&caps, 3).chars().next().unwrap(),
@@ -35,7 +35,6 @@ impl<'a> Policy<'a> {
         (self.letter == first) ^ (self.letter == second)
     }
 }
-
 
 pub fn run(lines: &Vec<String>) -> u32 {
     let re = Regex::new(r"(\d+)-(\d+) ([a-z]): ([a-z]+)").unwrap();

@@ -12,7 +12,7 @@ fn valid(n: u64, queue: &VecDeque<u64>) -> bool {
     false
 }
 
-pub fn part1(inputs: &Vec<u64>) -> u64{
+pub fn part1(inputs: &Vec<u64>) -> u64 {
     let mut queue = VecDeque::new();
     let queue_size = 25;
 
