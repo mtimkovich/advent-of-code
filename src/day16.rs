@@ -64,6 +64,18 @@ fn get_tickets(lines: &Vec<String>) -> impl Iterator<Item = &String> {
         .skip(1)
 }
 
+fn get_my_ticket(lines: &Vec<String>) -> Vec<u32> {
+    get_values(
+        lines
+            .iter()
+            .skip_while(|&line| !line.starts_with("your ticket"))
+            .skip(1)
+            .next()
+            .unwrap(),
+    )
+    .collect()
+}
+
 fn get_values<'a>(ticket: &'a String) -> impl Iterator<Item = u32> + 'a {
     ticket.split(',').filter_map(|s| s.parse::<u32>().ok())
 }
@@ -104,6 +116,22 @@ fn valid_tickets<'a>(
     valid_tickets
 }
 
+fn field_indexes(possible_rules: HashMap<usize, HashSet<&str>>) -> HashMap<usize, &str> {
+    let mut possibles: Vec<(usize, HashSet<&str>)> = possible_rules.into_iter().collect();
+    possibles.sort_by(|a, b| a.1.len().cmp(&b.1.len()));
+
+    let mut prev: HashSet<&str> = HashSet::new();
+
+    let mut positions = HashMap::new();
+    for (key, value) in possibles {
+        let diff: Vec<&str> = value.difference(&prev).cloned().collect();
+        prev.insert(diff[0]);
+        positions.insert(key, diff[0]);
+    }
+
+    positions
+}
+
 pub fn part1(lines: &Vec<String>) -> u32 {
     let rules = get_rules(lines);
     let tickets = get_tickets(lines);
@@ -118,9 +146,9 @@ pub fn part1(lines: &Vec<String>) -> u32 {
 
 pub fn part2(lines: &Vec<String>) {
     let rules = get_rule_names(lines);
+    let my_ticket = get_my_ticket(lines);
     let all_tickets = get_tickets(lines);
     let tickets = valid_tickets(all_tickets, &rules);
-    println!("{}", tickets.len());
 
     let mut possible_rules: HashMap<usize, HashSet<&str>> = HashMap::new();
 
@@ -130,30 +158,20 @@ pub fn part2(lines: &Vec<String>) {
     }
 
     for ticket in tickets {
-        let values: Vec<u32> = get_values(ticket).collect();
-
-        // For each index, have a hashset corresponding to each rule.
-        // if a field doesn't match a rule, remove it from the set.
-        // stop when each index only has 1.
-
-        for (i, &n) in values.iter().enumerate() {
+        for (i, n) in get_values(ticket).enumerate() {
             for (field, range) in rules.iter() {
                 if !valid_for_field(range, n) {
-                    // println!("{}: {:?}", n, range);
-                    // println!("invalid, removing {} from {}", field, i);
                     possible_rules.get_mut(&i).unwrap().remove(field);
                 }
             }
         }
     }
 
-    // TODO: Collect into vector and sort by value.len().
-    for (key, value) in possible_rules.iter() {
-        // if value.iter().find(|s| s.contains("departure")).is_none() {
-        //     continue;
-        // }
-
-        println!("{}", key);
-        println!("{}: {:?}", value.len(), value);
-    }
+    let possibles = field_indexes(possible_rules);
+    let res: u64 = possibles
+        .into_iter()
+        .filter(|(_, v)| v.contains("departure"))
+        .map(|(i, _)| my_ticket[i] as u64)
+        .product();
+    println!("{}", res);
 }
