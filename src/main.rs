@@ -27,5 +27,5 @@ fn main() {
     let path = format!("../inputs/{}", filename);
     let inputs = read_lines(&path).unwrap();
 
-    day16::part1(&inputs);
+    day16::part2(&inputs);
 }
